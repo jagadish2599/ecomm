@@ -2,13 +2,13 @@
 FROM nginx:alpine
 
 # Step 2: Set the maintainer label (optional)
-LABEL maintainer="Your Name pothana jagadish"
+LABEL maintainer="pothana jagadish"
 
 # Step 3: Copy the static HTML, CSS, and JavaScript files to the Nginx web directory
-COPY ./ecomm/ /usr/share/nginx/html
+COPY . /usr/share/nginx/html
 
 # Step 4: Expose the default Nginx port (80)
-EXPOSE 80
+EXPOSE 9000
 
 # Step 5: Start the Nginx server
 CMD ["nginx", "-g", "daemon off;"]
