@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecomm-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecomm
+  template:
+    metadata:
+      labels:
+        app: ecomm
+    spec:
+      containers:
+      - name: ecomm-container
+        image: ecomm-image:latest
+        ports:
+        - containerPort: 80
