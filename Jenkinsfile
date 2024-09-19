@@ -1,35 +1,17 @@
 pipeline {
     agent any
-
     stages {
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/your-username/ecomm-project.git'
-            }
-        }
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
                 script {
-                    dockerImage = docker.build("ecomm-image:${env.BUILD_ID}")
+                    dockerImage = docker.build('ecomm')
                 }
             }
         }
-        stage('Push Docker Image') {
+        stage('Deploy') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                        dockerImage.push("${env.BUILD_ID}")
-                    }
-                }
-            }
-        }
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    sh '''
-                    kubectl apply -f kubernetes-deployment.yaml
-                    kubectl apply -f kubernetes-service.yaml
-                    '''
+                    dockerImage.run('-p 8000:80')  // Change port if needed
                 }
             }
         }
